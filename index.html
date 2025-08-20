@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Haxball</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+    <header class="topbar">
+      <div class="scoreboard">
+        <div class="team left">
+          <span id="leftName" class="name">Sol</span>
+          <span id="leftScore" class="score">0</span>
+        </div>
+        <div class="divider">:</div>
+        <div class="team right">
+          <span id="rightScore" class="score">0</span>
+          <span id="rightName" class="name">Sağ</span>
+        </div>
+      </div>
+      <div class="controls">
+        <span id="modeBadge" class="mode-badge">Klasik</span>
+        <span><strong>Oyuncu 1</strong>: W A S D · <strong>Vur</strong>: Space</span>
+        <span><strong>Oyuncu 2</strong>: O P Ğ Ç · <strong>Vur</strong>: Ç</span>
+        <span><strong>Esc</strong>: Duraklat / Devam</span>
+        <span><strong>R</strong>: Sıfırla</span>
+      </div>
+    </header>
+
+    <main class="stage">
+      <canvas id="game" width="1024" height="576"></canvas>
+      <div id="chat" class="chat">
+        <div id="chatMessages" class="chat-messages"></div>
+        <div class="chat-input">
+          <select id="chatFrom">
+            <option value="left">Sol</option>
+            <option value="right">Sağ</option>
+          </select>
+          <input id="chatInput" type="text" placeholder="Mesaj yaz..." maxlength="140" />
+          <button id="chatSend" type="button">Gönder</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bottombar">
+      Basit bir Haxball klonu — yerel iki oyuncu (WASD/Space ve O P Ğ Ç/Ç).
+    </footer>
+  </div>
+
+  <div id="startModal" class="modal show">
+    <div class="panel">
+      <h1>Mini Haxball</h1>
+      <div class="form">
+        <label for="leftNameInput">Sol takım adı</label>
+        <input id="leftNameInput" type="text" placeholder="Sol" maxlength="16" />
+        <label for="rightNameInput">Sağ takım adı</label>
+        <input id="rightNameInput" type="text" placeholder="Sağ" maxlength="16" />
+        <label for="stadiumSelect">Stadyum</label>
+        <select id="stadiumSelect">
+          <option value="orange">Klasik Turuncu</option>
+          <option value="neon">Gece Neon</option>
+          <option value="grass">Gündüz Çim</option>
+          <option value="retro">Retro Koyu</option>
+        </select>
+        <label for="modeSelect">Oyun modu</label>
+        <select id="modeSelect">
+          <option value="classic">Klasik</option>
+          <option value="ice">Buz Paten</option>
+          <option value="heavy">Ağır Top</option>
+          <option value="turbo">Turbo Şut</option>
+        </select>
+        <label for="playTypeSelect">Oyun tipi</label>
+        <select id="playTypeSelect">
+          <option value="local">Yerel (aynı klavye)</option>
+          <option value="online">Online (sunucu ile)</option>
+        </select>
+        <label for="roomInput">Oda kodu (online)</label>
+        <input id="roomInput" type="text" placeholder="default" maxlength="24" />
+        <button id="startBtn" type="button">Başla</button>
+      </div>
+      <p class="hint">P1: WASD + Space · P2: O P Ğ Ç + Ç</p>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html> 

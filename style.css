@@ -1,0 +1,77 @@
+* { box-sizing: border-box; }
+:root{
+  --bg:#0c0d10;
+  --card:#12141b;
+  --border:#21242e;
+  --ink:#eaeef5;
+  --muted:#9aa3b2;
+  --accent:#ff8c42;
+  --accent-2:#ffa45b;
+}
+html, body { height: 100%; margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif; background:var(--bg); color:var(--ink); }
+
+.layout { display:flex; flex-direction:column; height:100%; max-width: 1100px; margin: 0 auto; padding: 12px; gap: 10px; }
+.topbar, .bottombar { display:flex; align-items:center; justify-content:space-between; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:12px 16px; }
+.controls { display:flex; gap:16px; font-size: 14px; color: var(--muted); flex-wrap:wrap; }
+
+/* Scoreboard */
+.scoreboard { display:flex; align-items:center; gap:12px; }
+.scoreboard .divider { width: 44px; text-align:center; color: color-mix(in oklab, var(--muted), transparent 20%); font-weight: 800; font-size: 22px; }
+.team { display:flex; align-items:center; gap:10px; padding:8px 12px; border:1px solid var(--border); border-radius:12px; background: linear-gradient(180deg, color-mix(in oklab, var(--card), var(--accent) 6%), var(--card)); box-shadow: 0 6px 16px rgba(0,0,0,0.35) inset; }
+.team.left { border-color: color-mix(in oklab, var(--accent), transparent 60%); }
+.team.right { border-color: color-mix(in oklab, var(--accent-2), transparent 55%); }
+.team .name { font-weight: 700; color: var(--ink); opacity: 0.9; }
+.team .score { font-size: 28px; font-weight: 900; color: var(--accent); text-shadow: 0 0 14px color-mix(in oklab, var(--accent), transparent 60%); }
+.team.right .score { color: var(--accent-2); text-shadow: 0 0 14px color-mix(in oklab, var(--accent-2), transparent 60%); }
+
+.stage { flex:1; display:flex; align-items:center; justify-content:center; position:relative; }
+#game { width: 100%; height: auto; aspect-ratio: 16 / 9; background:
+  radial-gradient(1200px 600px at 90% 10%, color-mix(in oklab, var(--accent), transparent 88%), transparent 60%),
+  radial-gradient(900px 500px at 10% 90%, color-mix(in oklab, var(--accent-2), transparent 90%), transparent 60%),
+  linear-gradient(180deg, #0f1117 0%, #0a0b0f 100%);
+  border: 2px solid #2b2f3a; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.45) inset, 0 20px 40px rgba(0,0,0,0.35);
+}
+
+/* Animated glow overlay */
+.stage::before { content:""; position:absolute; inset: 8px; border-radius: 16px; pointer-events:none; mix-blend-mode: screen; opacity: 0.35; filter: blur(0.5px) hue-rotate(0deg); background:
+  radial-gradient(400px 220px at 20% 30%, rgba(255,140,66,0.35), transparent 70%),
+  radial-gradient(340px 200px at 80% 70%, rgba(255,164,91,0.28), transparent 70%);
+  animation: glowMove 10s ease-in-out infinite alternate;
+}
+@keyframes glowMove {
+  0% { opacity: 0.25; transform: translateY(-6px); filter: hue-rotate(0deg); }
+  50% { opacity: 0.4; transform: translateY(4px); filter: hue-rotate(6deg); }
+  100% { opacity: 0.3; transform: translateY(-2px); filter: hue-rotate(-6deg); }
+}
+
+.hud { position:absolute; top: 16px; left: 50%; transform: translateX(-50%); }
+.paused { position:absolute; inset: 0; display:none; align-items:center; justify-content:center; color:#fff; font-size: 42px; font-weight:800; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+.paused.show { display:flex; }
+
+/* Modal */
+.modal { position: fixed; inset: 0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,0.45); z-index: 20; }
+.modal.show { display:flex; }
+.modal .panel { width: min(520px, 92vw); background: var(--card); border:1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+.modal .panel h1 { margin: 0 0 14px 0; font-size: 26px; }
+.modal .form { display:grid; gap: 10px; }
+.modal label { font-size: 14px; color: var(--muted); }
+.modal input, .modal select { padding: 10px 12px; border-radius: 10px; border:1px solid var(--border); background:#0e1118; color: var(--ink); outline: none; }
+.modal input:focus, .modal select:focus { border-color: color-mix(in oklab, var(--accent), transparent 40%); box-shadow: 0 0 0 3px rgba(255,140,66,0.15); }
+.modal button { margin-top: 6px; padding: 10px 14px; border-radius: 10px; border:1px solid color-mix(in oklab, var(--accent), transparent 35%); background: linear-gradient(180deg, color-mix(in oklab, var(--accent), #ffffff 10%), var(--accent)); color: #1a1009; font-weight: 800; cursor: pointer; }
+.modal .hint { margin-top: 10px; color: var(--muted); font-size: 13px; } 
+
+/* Chat overlay */
+.chat { position:absolute; right: 14px; bottom: 14px; width: 320px; max-width: 38vw; display:flex; flex-direction:column; gap:8px; }
+.chat-messages { min-height: 120px; max-height: 200px; overflow:auto; padding:10px; border-radius: 12px; border:1px solid var(--border); background: rgba(18,20,27,0.82); backdrop-filter: blur(6px); box-shadow: 0 6px 16px rgba(0,0,0,0.35) inset; }
+.chat-messages .msg { display:flex; gap:8px; align-items:flex-start; margin: 6px 0; font-size: 13px; line-height: 1.2; }
+.chat-messages .from { font-weight: 800; color: var(--accent); }
+.chat-messages .from.right { color: var(--accent-2); }
+.chat-messages .text { color: var(--ink); opacity: 0.9; word-break: break-word; }
+.chat-input { display:flex; gap:6px; }
+.chat-input select, .chat-input input { flex: none; padding:8px 10px; border-radius: 10px; border:1px solid var(--border); background:#0e1118; color: var(--ink); }
+.chat-input select { width: 86px; }
+.chat-input input { flex: 1 1 auto; }
+.chat-input button { padding:8px 12px; border-radius: 10px; border:1px solid color-mix(in oklab, var(--accent), transparent 35%); background: linear-gradient(180deg, color-mix(in oklab, var(--accent), #ffffff 10%), var(--accent)); color:#1a1009; font-weight: 800; cursor: pointer; } 
+
+/* Mode badge */
+.mode-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius: 999px; border:1px solid color-mix(in oklab, var(--accent), transparent 40%); background: linear-gradient(180deg, color-mix(in oklab, var(--accent), #ffffff 12%), var(--accent)); color:#1a1009; font-weight: 900; box-shadow: 0 4px 14px rgba(0,0,0,0.35); } 
